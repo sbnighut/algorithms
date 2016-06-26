@@ -7,52 +7,53 @@ import java.util.Queue;
 
 // Ternary tree implementation for list of strings
 public class TreeNode {
-    public String value;
+    public int value, level;
     public TreeNode left;
     public TreeNode right;
-    public TreeNode mid;
 
-    public TreeNode(String value) {
+    public TreeNode(int value, int l) {
         this.value = value;
         this.left = null;
         this.right = null;
-        this.mid = null;
+        this.level = l;
     }
 
-    public void PrintInQueue(Queue<String> que) {
-        if(left != null)
-            que.add(left.value);
-        if(mid != null)
-            que.add(mid.value);
-        if(right != null)
-            que.add(right.value);
-    }
-
-    public void add(String v) {
-        TreeNode obj = this;
-        while (obj.left != null) {
-            obj = (TreeNode) obj.left;
-        }
-        TreeNode n = new TreeNode(v);
-        obj.left = n;
-    }
-
-    public List<Integer> find(String searchItem, int level) {
-        if (this.value == searchItem) {
-            if (this.left == null) {
-                List<Integer> x = new LinkedList<Integer>();
-                x.add(level + 1);
-                return x;
-            } else {
-                List<Integer> y = ((TreeNode) this.left).find(searchItem, level + 1);
-                y.add(level + 1);
-                return y;
+    public void PrintInQueue(LinkedList<TreeNode> que, LinkedList<TreeNode> que2) {
+        if (que2.isEmpty() == false) {
+            TreeNode x = que2.remove(0);
+            if (x.left != null) {
+                que.add(x.left);
+                que2.add(x.left);
             }
-        } else {
-            if (this.left != null)
-                return ((TreeNode) this.left).find(searchItem, level + 1);
-            return new LinkedList<Integer>();
+            if (x.right != null) {
+                que.add(x.right);
+                que2.add(x.right);
+            }
+            x.PrintInQueue(que, que2);
         }
+    }
+
+    public void add(int v, int l) {
+        if (v < this.value) {
+            if (this.left == null)
+                this.left = new TreeNode(v, l+1);
+            else
+                this.left.add(v, l+1);
+        } else if (v > this.value) {
+            if (this.right == null)
+                this.right = new TreeNode(v,l+1);
+            else
+                this.right.add(v, l+1);
+        }
+    }
+
+    public boolean find(int searchItem) {
+        if (this.value == searchItem)
+            return true;
+        else if (searchItem < this.value && this.left != null)
+            return this.left.find(searchItem);
+        else if (searchItem > this.value && this.right != null)
+            return this.right.find(searchItem);
+        else return false;
     }
 }
-
