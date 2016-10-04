@@ -1,24 +1,172 @@
 package com.swapnil;
 
 
-import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.LinkedList;
-import java.util.Queue;
+import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
+
+import java.util.*;
+import java.util.stream.IntStream;
+
+
+
 
 public class Algorithm {
     public static void main(String[] args) {
-//        linkedListImplementation();
-//        BinaryTreeImplementation();
-//        MergeSortImplementation();
-//        Problem1(3456);
-//        Problem2("abcc");
-//        Problem3(new int[]{1, 2, 3, 4});
-        Problem4("hey","sam","");
+        //        linkedListImplementation();
+        //        BinaryTreeImplementation();
+        //        MergeSortImplementation();
+        //        Problem1(3456);
+        //        Problem2("abcc");
+        //        Problem3(new int[]{1, 2, 3, 4});
+        //        Problem4("hey","sam","");
+        //        TokenizerProblem("He isn't a good man");
+        //HashMapImplementation();
+        //PatternChecker("[AZ[a-z](a-z)");
+
+        movePlane("7U3DX2D");
+
+
+
+
+
+
+
     }
 
 
-    //    # take an array and print non over lapping in order pairs. example:
+    static String movePlane(String command) {
+        List<Command> commands = new LinkedList<Command>();
+        int cmdCount = 0;
+        int nextInt = 0;
+        int decimalPlaces = 0;
+        for(int i = 0;i<command.length(); i++){
+            char ch = command.charAt(i);
+            nextInt = Character.getNumericValue(ch);
+            if(nextInt > -1 && nextInt <10){
+                cmdCount = cmdCount*10 + nextInt;
+                decimalPlaces++;
+            }
+            else{
+                if(cmdCount == 0)
+                    cmdCount = 1;
+                switch(ch){
+                    case 'D':
+                        commands.add(new Command(cmdCount, CommandType.D));
+                        break;
+                    case 'U':
+                        commands.add(new Command(cmdCount, CommandType.U));
+                        break;
+                    case 'L':
+                        commands.add(new Command(cmdCount, CommandType.L));
+                        break;
+                    case 'R':
+                        commands.add(new Command(cmdCount, CommandType.R));
+                        break;
+                    case 'X':
+                        if(commands.size() > cmdCount){
+                            int j = cmdCount;
+                            while(j > 0){
+                                commands.remove(commands.size()-1);
+                                j--;
+                            }
+                        }
+                        else
+                            commands = new LinkedList<Command>();
+                        break;
+                    default:
+                        break;
+
+                }
+                nextInt = 0;
+                cmdCount = 0;
+                decimalPlaces = 0;
+
+            }
+        }
+
+        //finding final coordinates
+        int X_Cordinate=0, Y_Cordinate=0;
+        for(Command c: commands){
+            switch(c.type){
+                case D:
+                    Y_Cordinate = Y_Cordinate - c.count;
+                    break;
+                case U:
+                    Y_Cordinate = Y_Cordinate + c.count;
+                    break;
+                case L:
+                    X_Cordinate = X_Cordinate - c.count;
+                    break;
+                case R:
+                    X_Cordinate = X_Cordinate + c.count;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return "("+X_Cordinate+", "+Y_Cordinate+")";
+    }
+
+    static void ComparatorImplementation(){
+        int[] b = new int[]{9,8,7,4,5,6};
+        Integer[] a = IntStream.of(b).boxed().toArray( Integer[]::new );
+        Arrays.sort(a, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+    }
+
+    static boolean PatternChecker(String s){
+        Stack<Character> st = new Stack<Character>();
+        int i = 0;
+
+        try {
+            while (i < s.length()) {
+                char ch = s.charAt(i);
+                switch (ch) {
+                    case '{':
+                        st.push(ch);
+                        break;
+                    case '}':
+                        st.pop();
+                        break;
+                    case '[':
+                        st.push(ch);
+                        break;
+                    case ']':
+                        st.pop();
+                        break;
+                    case '(':
+                        st.push(ch);
+                        break;
+                    case ')':
+                        st.pop();
+                        break;
+                    default:
+                        break;
+                }
+                i++;
+            }
+            if(st.size()>0)
+                return false;
+
+            return true;
+        }
+        catch (Exception e){
+            return  false;
+        }
+    }
+
+    static void TokenizerProblem(String s) {
+        Tokenizer t = new Tokenizer(s);
+        t.GenTokens();
+
+    }
+
+    static void Problem3(int[] arr) {
+        //    # take an array and print non over lapping in order pairs. example:
 //
 //
 //            # [1,2,3,4] => input
@@ -33,7 +181,6 @@ public class Algorithm {
 //    # (12)(3)(4)
 //    # (123)(4)
 //    # (1)(2)(3)(4)
-    static void Problem3(int[] arr) {
         boolean[] walls = new boolean[arr.length - 1];
         for (int x = 0; x < Math.pow(2, arr.length - 1) - 1; x++) {
             for (int i = 0; i < walls.length; i++) {
@@ -43,10 +190,10 @@ public class Algorithm {
         }
     }
 
-    //    given 2 strings A and B. generate all possible solutions when B is merged in A.
-//    Ex: A = "hey"
-//    B: "sam"
     static void Problem4(String a, String b, String tillNow) {
+        //    given 2 strings A and B. generate all possible solutions when B is merged in A.
+        //    Ex: A = "hey"
+        //    B: "sam"
         if (a.length() == 0 && b.length() == 0)
             System.out.println(tillNow);
 
@@ -75,8 +222,8 @@ public class Algorithm {
         System.out.print(")");
     }
 
-    // int to int array
     static void Problem1(int x) {
+        // int to int array
         char[] input = new char[10];
         int modValue = 10;
         for (int i = 0; i < 130; i++) {
@@ -111,7 +258,6 @@ public class Algorithm {
         s.setCharAt(i, s.charAt(j));
         s.setCharAt(j, c);
     }
-
 
     static void MergeSortImplementation() {
         int[] array = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
@@ -173,9 +319,18 @@ public class Algorithm {
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
 
-    static void HashTableImplementation() {
-        INode first = new Node(22);
-        System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
+    static void HashMapImplementation() {
+        Map<String, Integer> m = new HashMap<String, Integer>();
+        m.put("one", 1);
+        m.put("two", 2);
+        m.put("three", 3);
+        m.put("four", 4);
+        m.put("five", 5);
+        Iterator i = m.entrySet().iterator();
+        while(i.hasNext()){
+            Map.Entry e =  (Map.Entry)(i.next());
+            System.out.println(e.getKey()+" ==> "+e.getValue());
+        }
     }
 
     static void HashSetImplementation() {
