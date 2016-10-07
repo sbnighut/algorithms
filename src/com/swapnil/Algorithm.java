@@ -140,7 +140,7 @@ public class Algorithm {
             return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
     }
 
-    static void Problem3(int[] arr) {
+
     static String movePlane(String command) {
         List<Command> commands = new LinkedList<Command>();
         int cmdCount = 0;
