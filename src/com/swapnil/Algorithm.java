@@ -1,6 +1,8 @@
 package com.swapnil;
 
 
+import sun.reflect.generics.tree.Tree;
+
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.LinkedList;
@@ -14,25 +16,111 @@ public class Algorithm {
 //        Problem1(3456);
 //        Problem2("abcc");
 //        Problem3(new int[]{1, 2, 3, 4});
-        Problem4("hey","sam","");
+//        Problem4("hey","sam","");
+
+//        NumberToHex(51);
+//        NumberToString(2345);
+//        String z = longestPalindrome("bb");
+//        dfs();
+         int islandCount = numIslands(new char[][]{{1,1,1,1,0},{1,1,0,1,0},{1,1,0,0,0},{0,0,0,0,0}});
+
+
+
     }
 
+    static void dfs(){
+        TreeNode tree = new TreeNode(8, 0);
+        tree.add(5, 0);
+        tree.add(12, 0);
+        tree.add(2, 0);
+        tree.add(6, 0);
+        tree.add(10, 0);
+        tree.add(9, 0);
 
-    //    # take an array and print non over lapping in order pairs. example:
-//
-//
-//            # [1,2,3,4] => input
-//
-//    # output below is in order combination
-//
-//    # (1234)
-//    # (1)(234)
-//    # (1)(23)(4)
-//    # (1)(2)(34)
-//    # (12)(34)
-//    # (12)(3)(4)
-//    # (123)(4)
-//    # (1)(2)(3)(4)
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(tree);
+        int level = 0;
+        while(!q.isEmpty()){
+            TreeNode temp = q.remove();
+            if(temp == null)
+                System.out.print(" null ");
+            else {
+                System.out.print(" " + temp.value + " ");
+                q.add(temp.left);
+                q.add(temp.right);
+            }
+        }
+
+
+    }
+
+    static int numIslands(char[][] grid) {
+        return -1;
+    }
+
+    static void NumberToString(int x) {
+        int j = x;
+        while (j != 0) {
+            System.out.print(j % 10);
+            j = j / 10;
+        }
+    }
+
+    static void NumberToHex(int x) {
+        int j = x;
+        while (j != 0) {
+            System.out.print(j % 16);
+            j = j >> 4;
+        }
+    }
+
+    static int checkFromMiddle(String s, int m, int isEven){
+        int i,j;
+        if(isEven==0){
+            i=j=m;
+            while(i>0 && j<s.length()-1 && s.charAt(i-1) == s.charAt(j+1)){
+                i--;
+                j++;
+            }
+            return j-i+1;
+        }
+        else{
+            i=m;
+            j = m+1;
+            while(i>-1 && j<s.length() && s.charAt(i) == s.charAt(j)){
+                i--;
+                j++;
+            }
+            return j-i-1;
+        }
+    }
+
+    static String longestPalindrome(String s) {
+        int i=0, j=s.length()-1;
+        int max = 1;
+        int max_center = 0;
+        boolean isEven = false;
+        while(i<s.length()-1){
+            int tempMax = checkFromMiddle(s, i, 0);
+            if(tempMax > max){
+                max = tempMax;
+                max_center = i;
+                isEven = false;
+            }
+            tempMax = checkFromMiddle(s, i, 1);
+            if(tempMax > max){
+                max_center = i;
+                isEven =  true;
+                max = tempMax;
+            }
+            i++;
+        }
+        if(isEven)
+            return s.substring(max_center- (int)(max/2)+1, max_center+(max/2)+1);
+        else
+            return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
+    }
+
     static void Problem3(int[] arr) {
         boolean[] walls = new boolean[arr.length - 1];
         for (int x = 0; x < Math.pow(2, arr.length - 1) - 1; x++) {
@@ -43,10 +131,10 @@ public class Algorithm {
         }
     }
 
-    //    given 2 strings A and B. generate all possible solutions when B is merged in A.
-//    Ex: A = "hey"
-//    B: "sam"
     static void Problem4(String a, String b, String tillNow) {
+        //    given 2 strings A and B. generate all possible solutions when B is merged in A.
+        //    Ex: A = "hey"
+        //    B: "sam"
         if (a.length() == 0 && b.length() == 0)
             System.out.println(tillNow);
 
@@ -63,6 +151,21 @@ public class Algorithm {
     }
 
     static void printComb(boolean[] walls, int[] arr) {
+        //    # take an array and print non over lapping in order pairs. example:
+        //
+        //
+        //            # [1,2,3,4] => input
+        //
+        //    # output below is in order combination
+        //
+        //    # (1234)
+        //    # (1)(234)
+        //    # (1)(23)(4)
+        //    # (1)(2)(34)
+        //    # (12)(34)
+        //    # (12)(3)(4)
+        //    # (123)(4)
+        //    # (1)(2)(3)(4)
         int index = 0;
         System.out.print("\n(" + arr[index++]);
         while (index <= walls.length) {
