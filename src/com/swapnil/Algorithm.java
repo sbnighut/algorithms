@@ -24,27 +24,15 @@ public class Algorithm {
 //        Problem2("abcc");
 //        Problem3(new int[]{1, 2, 3, 4});
 //        Problem4("hey","sam","");
-
 //        NumberToHex(51);
 //        NumberToString(2345);
 //        String z = longestPalindrome("bb");
 //        dfs();
-         int islandCount = numIslands(new char[][]{{1,1,1,1,0},{1,1,0,1,0},{1,1,0,0,0},{0,0,0,0,0}});
-
-
-
-        //        TokenizerProblem("He isn't a good man");
-        //HashMapImplementation();
-        //PatternChecker("[AZ[a-z](a-z)");
-
-        movePlane("7U3DX2D");
-
-
-
-
-
-
-
+//        TokenizerProblem("He isn't a good man");
+//        HashMapImplementation();
+//        PatternChecker("[AZ[a-z](a-z)");
+//        movePlane("7U3DX2D");
+        int islandCount = numIslands(new char[][]{{1,1,1,1,0},{1,1,0,1,0},{1,1,0,0,0},{0,0,0,0,0}});
     }
 
     static void dfs(){
@@ -139,7 +127,6 @@ public class Algorithm {
         else
             return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
     }
-
 
     static String movePlane(String command) {
         List<Command> commands = new LinkedList<Command>();
