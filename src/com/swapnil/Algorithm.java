@@ -1,6 +1,12 @@
 package com.swapnil;
 
 
+import sun.reflect.generics.tree.Tree;
+
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.LinkedList;
+import java.util.Queue;
 import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
 
 import java.util.*;
@@ -11,22 +17,28 @@ import java.util.stream.IntStream;
 
 public class Algorithm {
     public static void main(String[] args) {
-        //        linkedListImplementation();
-        //        BinaryTreeImplementation();
-        //        MergeSortImplementation();
-        //        Problem1(3456);
-        //        Problem2("abcc");
-        //        Problem3(new int[]{1, 2, 3, 4});
-        //        Problem4("hey","sam","");
-        //        TokenizerProblem("He isn't a good man");
-        //HashMapImplementation();
-        //PatternChecker("[AZ[a-z](a-z)");
-
-        //        movePlane("7U3DX2D");
-        //int[] z = twoSum(new int[]{3,2,4},6);
-
+//        linkedListImplementation();
+//        BinaryTreeImplementation();
+//        MergeSortImplementation();
+//        Problem1(3456);
+//        Problem2("abcc");
+//        Problem3(new int[]{1, 2, 3, 4});
+//        Problem4("hey","sam","");
+//        NumberToHex(51);
+//        NumberToString(2345);
+//        String z = longestPalindrome("bb");
+//        dfs();
+//        TokenizerProblem("He isn't a good man");
+//        HashMapImplementation();
+//        PatternChecker("[AZ[a-z](a-z)");
+//        movePlane("7U3DX2D");
+        int islandCount = numIslands(new char[][]{{1,1,1,1,0},{1,1,0,1,0},{1,1,0,0,0},{0,0,0,0,0}});
         threeSum(new int[]{2,5,-7, 3, -5});
+
     }
+
+        movePlane("7U3DX2D");
+
 
     static List<List<Integer>> set;
     static List<List<Integer>> threeSum(int[] nums) {
@@ -45,13 +57,17 @@ public class Algorithm {
         }
     }
 
+    static int numIslands(char[][] grid) {
+        return -1;
+    }
+
     static int[] twoSum(int[] nums, int target){
         List<Integer> result = new LinkedList<Integer>();
         Map<Integer, Integer> m = new HashMap<Integer, Integer>() ;
         for(int i=0;i<nums.length;i++){
             m.put(nums[i], i);
         }
-
+    
         for(int i=0;i<=nums.length/2;i++){
             if(m.containsKey(nums[i]) && m.containsKey(target - nums[i]) && nums[i] != target/2){
                 result.add(m.get(nums[i]));
@@ -59,6 +75,67 @@ public class Algorithm {
             }
         }
         return result.stream().mapToInt(k->k).toArray();
+    static void NumberToString(int x) {
+        int j = x;
+        while (j != 0) {
+            System.out.print(j % 10);
+            j = j / 10;
+        }
+    }
+
+    static void NumberToHex(int x) {
+        int j = x;
+        while (j != 0) {
+            System.out.print(j % 16);
+            j = j >> 4;
+        }
+    }
+
+    static int checkFromMiddle(String s, int m, int isEven){
+        int i,j;
+        if(isEven==0){
+            i=j=m;
+            while(i>0 && j<s.length()-1 && s.charAt(i-1) == s.charAt(j+1)){
+                i--;
+                j++;
+            }
+            return j-i+1;
+        }
+        else{
+            i=m;
+            j = m+1;
+            while(i>-1 && j<s.length() && s.charAt(i) == s.charAt(j)){
+                i--;
+                j++;
+            }
+            return j-i-1;
+        }
+    }
+
+    static String longestPalindrome(String s) {
+        int i=0, j=s.length()-1;
+        int max = 1;
+        int max_center = 0;
+        boolean isEven = false;
+        while(i<s.length()-1){
+            int tempMax = checkFromMiddle(s, i, 0);
+            if(tempMax > max){
+                max = tempMax;
+                max_center = i;
+                isEven = false;
+            }
+            tempMax = checkFromMiddle(s, i, 1);
+            if(tempMax > max){
+                max_center = i;
+                isEven =  true;
+                max = tempMax;
+            }
+            i++;
+        }
+        if(isEven)
+            return s.substring(max_center- (int)(max/2)+1, max_center+(max/2)+1);
+        else
+            return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
     }
 
     static String movePlane(String command) {
@@ -238,6 +315,21 @@ public class Algorithm {
     }
 
     static void printComb(boolean[] walls, int[] arr) {
+        //    # take an array and print non over lapping in order pairs. example:
+        //
+        //
+        //            # [1,2,3,4] => input
+        //
+        //    # output below is in order combination
+        //
+        //    # (1234)
+        //    # (1)(234)
+        //    # (1)(23)(4)
+        //    # (1)(2)(34)
+        //    # (12)(34)
+        //    # (12)(3)(4)
+        //    # (123)(4)
+        //    # (1)(2)(3)(4)
         int index = 0;
         System.out.print("\n(" + arr[index++]);
         while (index <= walls.length) {
