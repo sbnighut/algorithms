@@ -22,16 +22,44 @@ public class Algorithm {
         //HashMapImplementation();
         //PatternChecker("[AZ[a-z](a-z)");
 
-        movePlane("7U3DX2D");
+        //        movePlane("7U3DX2D");
+        //int[] z = twoSum(new int[]{3,2,4},6);
 
-
-
-
-
-
-
+        threeSum(new int[]{2,5,-7, 3, -5});
     }
 
+    static List<List<Integer>> set;
+    static List<List<Integer>> threeSum(int[] nums) {
+        set = new LinkedList<List<Integer>>();
+        addThree(nums, 0, 1, 2, 0);
+        return set;
+    }
+
+    static void addThree(int[] nums,int i, int j, int k, int target){
+        if(i< j && j <k && k<nums.length) {
+            if ((nums[i] + nums[j] + nums[k]) == target)
+                set.add((Arrays.asList(new Integer[]{nums[i], nums[j], nums[k]})));
+            addThree(nums, i+1, j, k, target);
+            addThree(nums, i, j+1, k, target);
+            addThree(nums, i, j, k+1, target);
+        }
+    }
+
+    static int[] twoSum(int[] nums, int target){
+        List<Integer> result = new LinkedList<Integer>();
+        Map<Integer, Integer> m = new HashMap<Integer, Integer>() ;
+        for(int i=0;i<nums.length;i++){
+            m.put(nums[i], i);
+        }
+
+        for(int i=0;i<=nums.length/2;i++){
+            if(m.containsKey(nums[i]) && m.containsKey(target - nums[i]) && nums[i] != target/2){
+                result.add(m.get(nums[i]));
+                result.add(m.get(target - nums[i]));
+            }
+        }
+        return result.stream().mapToInt(k->k).toArray();
+    }
 
     static String movePlane(String command) {
         List<Command> commands = new LinkedList<Command>();
