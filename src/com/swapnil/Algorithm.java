@@ -1,19 +1,13 @@
 package com.swapnil;
 
 
-import sun.reflect.generics.tree.Tree;
-
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.Queue;
 import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
-
 import java.util.*;
 import java.util.stream.IntStream;
-
-
-
 
 public class Algorithm {
     public static void main(String[] args) {
@@ -32,13 +26,9 @@ public class Algorithm {
 //        HashMapImplementation();
 //        PatternChecker("[AZ[a-z](a-z)");
 //        movePlane("7U3DX2D");
-        int islandCount = numIslands(new char[][]{{1,1,1,1,0},{1,1,0,1,0},{1,1,0,0,0},{0,0,0,0,0}});
-        threeSum(new int[]{2,5,-7, 3, -5});
-
+//        threeSum(new int[]{2,5,-7, 3, -5});
+//        movePlane("7U3DX2D");
     }
-
-        movePlane("7U3DX2D");
-
 
     static List<List<Integer>> set;
     static List<List<Integer>> threeSum(int[] nums) {
@@ -46,7 +36,6 @@ public class Algorithm {
         addThree(nums, 0, 1, 2, 0);
         return set;
     }
-
     static void addThree(int[] nums,int i, int j, int k, int target){
         if(i< j && j <k && k<nums.length) {
             if ((nums[i] + nums[j] + nums[k]) == target)
@@ -56,25 +45,21 @@ public class Algorithm {
             addThree(nums, i, j, k+1, target);
         }
     }
-
-    static int numIslands(char[][] grid) {
-        return -1;
-    }
-
-    static int[] twoSum(int[] nums, int target){
+    static int[] twoSum(int[] nums, int target) {
         List<Integer> result = new LinkedList<Integer>();
-        Map<Integer, Integer> m = new HashMap<Integer, Integer>() ;
-        for(int i=0;i<nums.length;i++){
+        Map<Integer, Integer> m = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; i++) {
             m.put(nums[i], i);
         }
-    
-        for(int i=0;i<=nums.length/2;i++){
-            if(m.containsKey(nums[i]) && m.containsKey(target - nums[i]) && nums[i] != target/2){
+
+        for (int i = 0; i <= nums.length / 2; i++) {
+            if (m.containsKey(nums[i]) && m.containsKey(target - nums[i]) && nums[i] != target / 2) {
                 result.add(m.get(nums[i]));
                 result.add(m.get(target - nums[i]));
             }
         }
-        return result.stream().mapToInt(k->k).toArray();
+        return result.stream().mapToInt(k -> k).toArray();
+    }
     static void NumberToString(int x) {
         int j = x;
         while (j != 0) {
@@ -82,7 +67,6 @@ public class Algorithm {
             j = j / 10;
         }
     }
-
     static void NumberToHex(int x) {
         int j = x;
         while (j != 0) {
@@ -90,7 +74,6 @@ public class Algorithm {
             j = j >> 4;
         }
     }
-
     static int checkFromMiddle(String s, int m, int isEven){
         int i,j;
         if(isEven==0){
@@ -111,7 +94,6 @@ public class Algorithm {
             return j-i-1;
         }
     }
-
     static String longestPalindrome(String s) {
         int i=0, j=s.length()-1;
         int max = 1;
@@ -137,7 +119,6 @@ public class Algorithm {
         else
             return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
     }
-
     static String movePlane(String command) {
         List<Command> commands = new LinkedList<Command>();
         int cmdCount = 0;
@@ -211,7 +192,6 @@ public class Algorithm {
 
         return "("+X_Cordinate+", "+Y_Cordinate+")";
     }
-
     static void ComparatorImplementation(){
         int[] b = new int[]{9,8,7,4,5,6};
         Integer[] a = IntStream.of(b).boxed().toArray( Integer[]::new );
@@ -222,7 +202,6 @@ public class Algorithm {
             }
         });
     }
-
     static boolean PatternChecker(String s){
         Stack<Character> st = new Stack<Character>();
         int i = 0;
@@ -263,13 +242,11 @@ public class Algorithm {
             return  false;
         }
     }
-
     static void TokenizerProblem(String s) {
         Tokenizer t = new Tokenizer(s);
         t.GenTokens();
 
     }
-
     static void Problem3(int[] arr) {
         //    # take an array and print non over lapping in order pairs. example:
 //
@@ -294,7 +271,6 @@ public class Algorithm {
             printComb(walls, arr);
         }
     }
-
     static void Problem4(String a, String b, String tillNow) {
         //    given 2 strings A and B. generate all possible solutions when B is merged in A.
         //    Ex: A = "hey"
@@ -313,7 +289,6 @@ public class Algorithm {
             Problem4(a.substring(1), b, tillNow + a.charAt(0));
         }
     }
-
     static void printComb(boolean[] walls, int[] arr) {
         //    # take an array and print non over lapping in order pairs. example:
         //
@@ -341,7 +316,6 @@ public class Algorithm {
         }
         System.out.print(")");
     }
-
     static void Problem1(int x) {
         // int to int array
         char[] input = new char[10];
@@ -356,11 +330,9 @@ public class Algorithm {
         }
         System.out.println("The string value of number is:" + Arrays.toString(input));
     }
-
     static void Problem2(String s) {
         Permutation(new StringBuffer(""), new StringBuffer(s));
     }
-
     static void Permutation(StringBuffer left, StringBuffer right) {
         if (right.length() == 1)
             System.out.println(left.toString() + right.toString());
@@ -372,33 +344,27 @@ public class Algorithm {
             }
         }
     }
-
     static void Swap(StringBuffer s, int i, int j) {
         char c = s.charAt(i);
         s.setCharAt(i, s.charAt(j));
         s.setCharAt(j, c);
     }
-
     static void MergeSortImplementation() {
         int[] array = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
         MergeSort m = new MergeSort(array);
     }
-
     static void GraphImplementation() {
         INode first = new Node(22);
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
-
     static void HeapImplementation() {
         INode first = new Node(22);
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
-
     static void BalancedTreeImplementation() {
         INode first = new Node(22);
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
-
     static void BinaryTreeImplementation() {
         TreeNode tree = new TreeNode(1, 0);
         tree.add(-34, 0);
@@ -433,12 +399,10 @@ public class Algorithm {
         }
         System.out.print("The number 55's presence in tree is :" + tree.find(58));
     }
-
     static void DictionaryImplementation() {
         INode first = new Node(22);
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
-
     static void HashMapImplementation() {
         Map<String, Integer> m = new HashMap<String, Integer>();
         m.put("one", 1);
@@ -452,12 +416,10 @@ public class Algorithm {
             System.out.println(e.getKey()+" ==> "+e.getValue());
         }
     }
-
     static void HashSetImplementation() {
         INode first = new Node(22);
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
-
     static void linkedListImplementation() {
         INode first = new Node(22);
         first.add(33);
