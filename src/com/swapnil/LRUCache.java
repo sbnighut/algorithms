@@ -1,22 +1,45 @@
 package com.swapnil;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class LRUCache {
-
-    static Map<Integer, Integer> m;
+    Node head;
+    Node tail;
+    static Map<Integer, Node> m;
+    static List<Node> list;
     public LRUCache(int capacity) {
-        m = new TreeMap<Integer, Integer>();
-
-
+        m = new HashMap<Integer, Node>();
+        list = new LinkedList<Node>();
+        head = new Node(-1);
+        tail = head;
+        head.next = null;
+        head.prev = null;
     }
 
-    public int get(int key) {
+    public int get(Integer key) {
+        if(m.containsKey(key)){
+            Node i = m.get(key);
+            i.next.prev = i.prev;
+            i.prev.next = i.next;
+            i.next = head;
+            head.prev = i;
+            head = i;
+            return i.value;
+        }
         return -1;
     }
 
-    public void set(int key, int value) {
-
+    public void set(Integer key, Node value) {
+        if(m.containsKey(key)){
+            Node i = m.get(key);
+            i.next.prev = i.prev;
+            i.prev.next = i.next;
+            i.next = head;
+            head.prev = i;
+            head = i;
+        }
+        else {
+            m.put(key, value);
+        }
     }
 }

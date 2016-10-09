@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import apple.laf.JRSUIUtils;
 import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -28,8 +30,102 @@ public class Algorithm {
 //        movePlane("7U3DX2D");
 //        threeSum(new int[]{2,5,-7, 3, -5});
 //        movePlane("7U3DX2D");
+
+//        LCA();
+        addTwoNumbersAlgo();
+
+
     }
 
+    static void addTwoNumbersAlgo(){
+        ListNode l1 = new ListNode(1);
+//        l1.next = new ListNode(8);
+//        l1.next.next = new ListNode(3);
+        ListNode l2 = new ListNode(9);
+        l2.next = new ListNode(9);
+//        l2.next.next = new ListNode(4);
+        addTwoNumbers(l1, l2);
+    }
+
+    static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry=0;
+        int sum =l2.val + l1.val;
+        ListNode head = null;
+        ListNode current = null;
+
+        while(l2 != null || l1 != null){
+            ListNode l = new ListNode(0);
+            if(l1 == null){
+                sum = l2.val + carry;
+                l2 = l2.next;
+            }
+            else if(l2 == null){
+                sum = l1.val + carry;
+                l1 = l1.next;
+            }
+            else{
+                sum = l1.val + l2.val + carry;
+                l2 = l2.next;
+                l1 = l1.next;
+            }
+            carry = sum/10;
+            l.val = sum%10;
+            if(head == null) {
+                head = l;
+                current = l;
+            }
+            else {
+                current.next = l;
+                current = current.next;
+            }
+        }
+        if(carry == 1){
+            current.next = new ListNode(1);
+        }
+        return head;
+    }
+
+    static void LCA(){
+        TreeNode t = new TreeNode(40);
+        TreeNode t1 = new TreeNode(30);
+        TreeNode t2 = new TreeNode(100);
+        TreeNode t3 = new TreeNode(50);
+        TreeNode t4 = new TreeNode(60);
+        TreeNode t5 = new TreeNode(80);
+        TreeNode t6 = new TreeNode(70);
+        TreeNode t7 = new TreeNode(90);
+        TreeNode t8 = new TreeNode(20);
+        TreeNode t9 = new TreeNode(18);
+        t.add(t1);
+        t.add(t2);
+        t.add(t3);
+        t.add(t4);
+        t.add(t5);
+        t.add(t6);
+        t.add(t7);
+        t.add(t8);
+        t.add(t9);
+
+        lowestCommonAncestor(t, t1, t2);
+    }
+    static TreeNode lowestCommonAncestor(TreeNode currentNode, TreeNode searchItem1, TreeNode searchItem2) {
+        if(currentNode == null)
+            return currentNode;
+        else if(currentNode.val == searchItem1.val || (currentNode.val == searchItem2.val))
+            return currentNode;
+        else {
+            TreeNode find1 = lowestCommonAncestor(currentNode.left, searchItem1, searchItem2);
+            TreeNode find2 = lowestCommonAncestor(currentNode.right, searchItem1, searchItem2);
+            if(find1!=null && find2!=null) {
+                return currentNode;
+            }
+
+            if(find1!=null)
+                return find1;
+            else
+                return find2;
+        }
+    }
     static List<List<Integer>> set;
     static List<List<Integer>> threeSum(int[] nums) {
         set = new LinkedList<List<Integer>>();
@@ -366,7 +462,7 @@ public class Algorithm {
         System.out.print("The number of occurences of number 55 is :" + first.find(55, -1).toString());
     }
     static void BinaryTreeImplementation() {
-        TreeNode tree = new TreeNode(1, 0);
+        TNode tree = new TNode(1, 0);
         tree.add(-34, 0);
         tree.add(2, 0);
         tree.add(76, 0);
@@ -381,8 +477,8 @@ public class Algorithm {
         tree.add(33, 0);
         tree.add(22, 0);
         tree.add(11, 0);
-        LinkedList<TreeNode> xyz = new LinkedList<TreeNode>();
-        LinkedList<TreeNode> xyz2 = new LinkedList<TreeNode>();
+        LinkedList<TNode> xyz = new LinkedList<TNode>();
+        LinkedList<TNode> xyz2 = new LinkedList<TNode>();
         xyz.add(tree);
         xyz2.add(tree);
         int currentLevel = -1;
