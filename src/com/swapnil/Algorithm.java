@@ -32,11 +32,43 @@ public class Algorithm {
 //        movePlane("7U3DX2D");
 
 //        LCA();
-        addTwoNumbersAlgo();
-
-
+//        addTwoNumbersAlgo();
+//        maxSlidingWindow(new int[]{1, -1}, 1);
     }
 
+    static int[] maxSlidingWindow(int[] nums, int k) {
+        int prevLeft = 0;
+        int prevRight = k-1;
+        int prevMaxIndex = 0;
+        int max = -99999;
+        int[] maxArray = nums.length>0? new int[nums.length-k+1]: new int[0];
+        for(int i=0;i<k;i++){
+            if(nums[i] > max){
+                max = nums[i];
+                prevMaxIndex = i;
+            }
+            maxArray[0] = max;
+        }
+        for(int i=1;i<=nums.length-k;i++){
+            if(prevMaxIndex >= i && nums[i+k-1] > max){
+                prevMaxIndex = i+k-1;
+                max = nums[i+k-1];
+            }
+            else if(prevMaxIndex < i){
+                max = -9999;
+                for(int j=i;j<i+k;j++){
+                    if(nums[j] > max){
+                        max = nums[j];
+                        prevMaxIndex = j;
+                    }
+                }
+            }
+            maxArray[i] = max;
+            prevLeft++;
+            prevRight++;
+        }
+        return maxArray;
+    }
     static void addTwoNumbersAlgo(){
         ListNode l1 = new ListNode(1);
 //        l1.next = new ListNode(8);
@@ -46,7 +78,6 @@ public class Algorithm {
 //        l2.next.next = new ListNode(4);
         addTwoNumbers(l1, l2);
     }
-
     static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int carry=0;
         int sum =l2.val + l1.val;
@@ -84,7 +115,6 @@ public class Algorithm {
         }
         return head;
     }
-
     static void LCA(){
         TreeNode t = new TreeNode(40);
         TreeNode t1 = new TreeNode(30);
