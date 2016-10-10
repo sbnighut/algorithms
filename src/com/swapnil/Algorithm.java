@@ -6,7 +6,6 @@ import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import apple.laf.JRSUIUtils;
 import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
 import java.util.*;
 import java.util.stream.IntStream;
