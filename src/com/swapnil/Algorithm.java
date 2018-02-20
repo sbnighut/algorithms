@@ -11,28 +11,133 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class Algorithm {
-    public static void main(String[] args) {
-//        linkedListImplementation();
-//        BinaryTreeImplementation();
-//        MergeSortImplementation();
-//        Problem1(3456);
-//        Problem2("abcc");
-//        Problem3(new int[]{1, 2, 3, 4});
-//        Problem4("hey","sam","");
-//        NumberToHex(51);
-//        NumberToString(2345);
-//        String z = longestPalindrome("bb");
-//        dfs();
-//        TokenizerProblem("He isn't a good man");
-//        HashMapImplementation();
-//        PatternChecker("[AZ[a-z](a-z)");
-//        movePlane("7U3DX2D");
-//        threeSum(new int[]{2,5,-7, 3, -5});
-//        movePlane("7U3DX2D");
 
-//        LCA();
-//        addTwoNumbersAlgo();
-//        maxSlidingWindow(new int[]{1, -1}, 1);
+    private static Map<String, Boolean> permutations = new HashMap<String, Boolean>();
+    private static Map<String, Boolean> finalPermutations = new HashMap<String, Boolean>();
+
+
+
+
+    private Map<String, Integer> consideredTargetList = new HashMap<String, Integer>();
+    private Map<String, Integer> consideredAvailableList = new HashMap<String, Integer>();
+
+    public static void main(String[] args) {
+
+    //        linkedListImplementation();
+    //        BinaryTreeImplementation();
+    //        MergeSortImplementation();
+    //        Problem1(3456);
+    //        Problem2("abcc");
+    //        Problem3(new int[]{1, 2, 3, 4});
+    //        Problem4("hey","sam","");
+    //        NumberToHex(51);
+    //        NumberToString(2345);
+    //        String z = longestPalindrome("bb");
+    //        dfs();
+    //        TokenizerProblem("He isn't a good man");
+    //        HashMapImplementation();
+    //        PatternChecker("[AZ[a-z](a-z)");
+    //        movePlane("7U3DX2D");
+    //        threeSum(new int[]{2,5,-7, 3, -5});
+    //        movePlane("7U3DX2D");
+
+    //        LCA();
+    //        addTwoNumbersAlgo();
+    //        maxSlidingWindow(new int[]{1, -1}, 1);
+
+    //        subStringsLessKDist("democracy", 5);
+
+    }
+
+
+    // METHOD SIGNATURE BEGINS, THIS METHOD IS REQUIRED
+//    List<Integer> subSequenceTags(List<String> targetList,
+//                                  List<String> availableTagList)
+//    {
+//        // WRITE YOUR CODE HERE
+//        int i =0;
+//        for(String targetTag: consideredTargetList){
+//            if(!consideredTargetList.containsKey(tagerTag)){
+//                consideredTargetList.put(targetTag, i);
+//            }
+//            i++;
+//        }
+//
+//
+//        i =0;
+//        for(String availableTag: consideredAvailableList){
+//            if(!consideredAvailableList.containsKey(availableTag))
+//                consideredAvailableList.put(availableTag, i);
+//            else
+//                consideredAvailableList.put(availableTag, consideredAvailableList.get(availableTag)+1);
+//
+//            i++;
+//        }
+//        return null;
+//    }
+
+
+
+    // METHOD SIGNATURE BEGINS, THIS METHOD IS REQUIRED
+    static List<String> subStringsLessKDist(String inputString, int num)
+    {
+        // WRITE YOUR CODE HERE
+
+        List<String> results =  new ArrayList<String>();
+
+        if(num > inputString.length())
+            return new ArrayList<String>();
+
+
+        substring(inputString, inputString.length(), num);
+        for(String s: permutations.keySet()){
+            if(checkIfContainsOnlyOneRepeatedCharacter(s, num-1) &&
+                    !finalPermutations.containsKey(s)){
+                finalPermutations.put(s, true);
+                results.add(s);
+            }
+        }
+
+
+        return results;
+    }
+
+    static Boolean checkIfContainsOnlyOneRepeatedCharacter(String s, int k){
+        Map<Character,Integer> map = new HashMap<Character,Integer>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!map.containsKey(c)) {
+                map.put(c, 1);
+            }
+        }
+        if((s.length()-1) == (k) && map.size() == k)
+            return true;
+
+        return false;
+    }
+
+
+
+    static void substring(String str, int n, int num)
+    {
+
+        for (int i = 0; i < n; i++)
+            for (int j = i+1; j <= n; j++) {
+
+                if ((j-i) == num && !permutations.containsKey(str.substring(i, j)))
+                    permutations.put(str.substring(i, j), true);
+            }
+
+    }
+
+    static String swap(String a, int i, int j)
+    {
+        char temp;
+        char[] charArray = a.toCharArray();
+        temp = charArray[i] ;
+        charArray[i] = charArray[j];
+        charArray[j] = temp;
+        return String.valueOf(charArray);
     }
 
     static int[] maxSlidingWindow(int[] nums, int k) {
@@ -219,31 +324,37 @@ public class Algorithm {
             return j-i-1;
         }
     }
+//    static String longestPalindrome(String s) {
+//        int i=0, j=s.length()-1;
+//        int max = 1;
+//        int max_center = 0;
+//        boolean isEven = false;
+//        while(i<s.length()-1){
+//            int tempMax = checkFromMiddle(s, i, 0);
+//            if(tempMax > max){
+//                max = tempMax;
+//                max_center = i;
+//                isEven = false;
+//            }
+//            tempMax = checkFromMiddle(s, i, 1);
+//            if(tempMax > max){
+//                max_center = i;
+//                isEven =  true;
+//                max = tempMax;
+//            }
+//            i++;
+//        }
+//        if(isEven)
+//            return s.substring(max_center- (int)(max/2)+1, max_center+(max/2)+1);
+//        else
+//            return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
+//    }
+
     static String longestPalindrome(String s) {
-        int i=0, j=s.length()-1;
-        int max = 1;
-        int max_center = 0;
-        boolean isEven = false;
-        while(i<s.length()-1){
-            int tempMax = checkFromMiddle(s, i, 0);
-            if(tempMax > max){
-                max = tempMax;
-                max_center = i;
-                isEven = false;
-            }
-            tempMax = checkFromMiddle(s, i, 1);
-            if(tempMax > max){
-                max_center = i;
-                isEven =  true;
-                max = tempMax;
-            }
-            i++;
-        }
-        if(isEven)
-            return s.substring(max_center- (int)(max/2)+1, max_center+(max/2)+1);
-        else
-            return s.substring(max_center- (int)(max/2), max_center+(max/2)+1);
+
+        return "";
     }
+
     static String movePlane(String command) {
         List<Command> commands = new LinkedList<Command>();
         int cmdCount = 0;
